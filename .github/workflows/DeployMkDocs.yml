@@ -1,29 +1,15 @@
-name: MakeDocs
-# Controls when the workflow will run 
+name: ci 
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  # pull_request:
-  #   branches: [ "main" ]
- jobs:
+    branches: 
+      - public
+jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: setup python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.x
-    - name: Install mkdocs
-      run: pip install --upgrade pip
-           pip install mkdocs
-           pip install mkdocs-material
-           pip install mkdocs-git-authors-plugin
-           pip install mkdocs-git-revision-date-localized-plugin
-           pip install mkdocs-git-committers-plugin
-           pip install mkdocs-glightbox
-           pip install mkdocs-img2fig-plugin
-           pip install mkdocs-mermaid2-plugin
-           # pip install mkdocs-simple-plugin==2.2.0
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: pip install mkdocs-material 
+      - run: mkdocs gh-deploy --force
